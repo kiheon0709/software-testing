@@ -4,9 +4,9 @@
     "description": "SW Testing Practice",
     "main": "index.js",
     "scripts": {
-      "test": "jest"
+        "test": "jest"
     },
     "devDependencies": {
-      "jest": "^29.7.0"
+        "jest": "^29.7.0"
     }
-  }
+}
