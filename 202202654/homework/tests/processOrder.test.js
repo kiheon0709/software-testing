@@ -6,10 +6,6 @@ describe("processOrder", () => {
       sendDiscountNotification: jest.fn(),
       sendBasicNotification: jest.fn(),
     };
-    const order = {
-      price: 0,
-      userId: 0,
-    };
     expect(() => processOrder(api, null)).toThrow();
   });
   test("price가 숫자가 아니면 에러 발생", () => {
@@ -33,12 +29,14 @@ describe("processOrder", () => {
       },
     };
     const order = {
-      price: 70000,
+      price: 60000,
       userId: 1,
     };
-    const spy = jest.spyOn(api, "sendDiscountNotification");
+    const spy1 = jest.spyOn(api, "sendDiscountNotification");
+    const spy2 = jest.spyOn(api, "sendBasicNotification");
     processOrder(api, order);
-    expect(spy).toHaveBeenCalled();
+    expect(spy1).toHaveBeenCalledWith(1);
+    expect(spy2).not.toHaveBeenCalled();
   });
   test("price < 50000이면 기본 알림 호출", () => {
     const api = {
@@ -51,11 +49,13 @@ describe("processOrder", () => {
     };
     const order = {
       price: 10000,
-      userId: 1,
+      userId: 2,
     };
-    const spy = jest.spyOn(api, "sendBasicNotification");
+    const spy1 = jest.spyOn(api, "sendDiscountNotification");
+    const spy2 = jest.spyOn(api, "sendBasicNotification");
     processOrder(api, order);
-    expect(spy).toHaveBeenCalled();
+    expect(spy1).not.toHaveBeenCalled();
+    expect(spy2).toHaveBeenCalledWith(2);
   });
   test("price를 반환한다", () => {
     const api = {
@@ -63,9 +63,9 @@ describe("processOrder", () => {
       sendBasicNotification: jest.fn(),
     };
     const order = {
-      price: 10000,
+      price: 30000,
       userId: 1,
     };
-    expect(processOrder(api, order)).toBe(10000);
+    expect(processOrder(api, order)).toBe(30000);
   });
 });
