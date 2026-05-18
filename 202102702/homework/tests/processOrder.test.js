@@ -3,11 +3,13 @@ const processOrder = require("../src/processOrder");
 describe("processOrder", () => {
   test("order가 없으면 에러 발생", () => {
     const mockApi = {};
+
     expect(() => processOrder(mockApi)).toThrow();
   });
 
   test("price가 숫자가 아니면 에러 발생", () => {
     const mockApi = {};
+
     expect(() => processOrder(mockApi, { price: "10000", userId: 1 })).toThrow();
   });
 
