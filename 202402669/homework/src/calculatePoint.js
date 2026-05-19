@@ -1,0 +1,7 @@
+function calculatePoint(price, isVip = false) {
+  if (typeof price !== "number") throw new Error("price must be a number");
+  const rate = isVip ? 0.02 : 0.01;
+  return Math.min(Math.floor(price * rate), 5000);
+}
+ 
+module.exports = calculatePoint;
